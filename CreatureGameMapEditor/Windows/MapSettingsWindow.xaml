@@ -1,0 +1,91 @@
+﻿<Window x:Class="CreatureGameMapEditor.Windows.MapSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CreatureGameMapEditor.Windows"
+        mc:Ignorable="d"
+        Title="Map Settings" Height="285" Width="300"
+        x:Name="MapSettings"
+        ResizeMode="NoResize">
+    <StackPanel Margin="5,0,5,0">
+        <Grid Margin="0,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Map Name:" Grid.Column="0"/>
+            <TextBox Text="{Binding MapName, Mode=TwoWay}" Grid.Column="1"/>
+        </Grid>
+        <Grid Margin="0,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Width:" Grid.Column="0"/>
+            <TextBox Text="{Binding MapWidth, Mode=TwoWay}" Grid.Column="1"/>
+        </Grid>
+        <Grid Margin="0,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Height:" Grid.Column="0"/>
+            <TextBox Text="{Binding MapHeight, Mode=TwoWay}" Grid.Column="1"/>
+        </Grid>
+        <Grid DataContext="{Binding Atlas}" Margin="0,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Atlas Sheet:" Grid.Column="0"/>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox IsEnabled="False" Text="{Binding TileSheet, Mode=OneWay}" Grid.Column="0"/>
+                <Button Grid.Column="1" Content="Browse..." Click="Event_SelectAtlasFile"/>
+            </Grid>
+        </Grid>
+
+        <Grid Margin="0,5,0,0" DataContext="{Binding Atlas}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Tile Width:" Grid.Column="0"/>
+            <TextBox Text="{Binding TileWidth, Mode=TwoWay}" Grid.Column="1"/>
+        </Grid>
+        <Grid Margin="0,5,0,0" DataContext="{Binding Atlas}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Tile Height:" Grid.Column="0"/>
+            <TextBox Text="{Binding TileHeight, Mode=TwoWay}" Grid.Column="1"/>
+        </Grid>
+        <Grid Margin="0,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Fill Tile:" Grid.Column="0"/>
+            <Button Grid.Column="1" Click="Event_SelectFillTile">
+                <Image Width="24" Height="24" Source="{Binding FillTile.TileImage}">
+
+                </Image>
+            </Button>
+        </Grid>
+        <Grid Height="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Apply Changes" Margin="20,5,20,5" Grid.Column="0" Click="Event_ApplySettings"/>
+            <Button Content="Close" Margin="20,5,20,5" Grid.Column="1" IsCancel="True" Click="Event_ExitWindow"/>
+        </Grid>
+    </StackPanel>
+</Window>

@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="CreatureGameMapEditor.Controls.AtlasDisplayControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CreatureGameMapEditor.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="550"
+             x:Name="ControlRoot">
+    <Grid>
+        <ListBox x:Name="AtlasContainer" 
+                 SelectedIndex="{Binding ElementName=ControlRoot, Path=SelectedIndex, Mode=TwoWay}" 
+                 ItemsSource="{Binding ElementName=ControlRoot, Path=Items}" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 PreviewMouseWheel="Event_PreZoom" MouseWheel="Event_Zoom"
+                 SelectionMode="Single">
+            
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <EventSetter Event="MouseLeftButtonUp" Handler="Event_SelectTile"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="{Binding ElementName=ControlRoot, Path=DisplaySize}" Height="{Binding ElementName=ControlRoot, Path=DisplaySize}">
+                        <Image Source="{Binding}" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel>
+                    </WrapPanel>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            
+        </ListBox>
+    </Grid>
+</UserControl>

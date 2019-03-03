@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="CreatureGameMapEditor.Controls.MapViewControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CreatureGameMapEditor.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="600"
+             x:Name="ControlRoot">
+    <UserControl.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="Z" Command="{Binding UndoAction}"/>
+        <KeyBinding Modifiers="Ctrl" Key="Y" Command="{Binding RedoAction}"/>
+    </UserControl.InputBindings>
+    <Grid Grid.Column="2" Background="Azure">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer x:Name="Scroller" Grid.Row="0" 
+                      HorizontalScrollBarVisibility="Visible" 
+                      PreviewMouseWheel="Event_PreZoom">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <ItemsControl x:Name="MapContainer" ItemsSource="{Binding ElementName=ControlRoot, Path=Items}"
+                              Grid.Row="1" Grid.Column="1"
+                              
+                              MouseWheel="Event_Zoom"
+                              MouseMove="Event_ContinuePainting"
+                              MouseLeftButtonDown="Event_StartPainting"
+                              MouseLeftButtonUp="Event_StopPainting"
+                              
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+
+                    <ItemsControl.LayoutTransform>
+                        <ScaleTransform ScaleX="{Binding ElementName=ControlRoot, Path=ZoomLevel}" ScaleY="{Binding ElementName=ControlRoot, Path=ZoomLevel}"/>
+                    </ItemsControl.LayoutTransform>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="{Binding ElementName=ControlRoot, Path=Rows}" Columns="{Binding ElementName=ControlRoot, Path=Columns}"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="16" Height="16">
+                                <Image Source="{Binding TileImage}" 
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                <!--TODO: TOGGLE THE VISIBILITY ON THIS BORDER TO DISPLAY THE GRID LINES-->
+                                <Border BorderBrush="Black" BorderThickness=".5">
+                                    <Rectangle Fill="Transparent"></Rectangle>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Background="White">
+
+        </StackPanel>
+    </Grid>
+</UserControl>

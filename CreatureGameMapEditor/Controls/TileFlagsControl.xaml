@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="CreatureGameMapEditor.Controls.TileFlagsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CreatureGameMapEditor.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="175" d:DesignWidth="200"
+             x:Name="ControlRoot"
+             DataContextChanged="Event_ChangeDataContext">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Grid.Column="1" Margin="5">
+            <ComboBox x:Name="TileTypeSelection" SelectedIndex="0" Margin="0,0,0,5" 
+                      SelectionChanged="Event_SelectionChanged">
+                <ComboBoxItem Content="Ground" />
+                <ComboBoxItem Content="Water" />
+                <ComboBoxItem Content="Wall" />
+            </ComboBox>
+
+            <ComboBox x:Name="TileFeatureSelection" SelectedIndex="0" Margin="0,0,0,5" 
+                      Visibility="{Binding ElementName=ControlRoot, Path=DisplayFeatures, Converter={StaticResource booleanToVisibilityConverter}}" 
+                      SelectionChanged="Event_SelectionChanged">
+                <ComboBoxItem Content="No Features" />
+                <ComboBoxItem Content="Jumpable" />
+                <ComboBoxItem Content="Encounter" />
+                <ComboBoxItem Content="Portal" />
+            </ComboBox>
+
+            <ComboBox x:Name="JumpDirectionSelection" SelectedIndex="0" Margin="0,0,0,5" 
+                      Visibility="{Binding ElementName=ControlRoot, Path=DisplayJumpDirection, Converter={StaticResource booleanToVisibilityConverter}}" 
+                      SelectionChanged="Event_SelectionChanged">
+                <ComboBoxItem Content="North -> South" />
+                <ComboBoxItem Content="South -> North" />
+                <ComboBoxItem Content="East -> West" />
+                <ComboBoxItem Content="West -> East" />
+            </ComboBox>
+
+            <Grid Margin="0,0,0,5" 
+                  Visibility="{Binding ElementName=ControlRoot, Path=DisplayEncounterNumber, Converter={StaticResource booleanToVisibilityConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="25"/>
+                </Grid.ColumnDefinitions>
+
+                <Slider x:Name="EncounterID" 
+                        Grid.Column="0" IsSnapToTickEnabled="True" TickPlacement="BottomRight" 
+                        Maximum="15" Minimum="0" Interval="1" Value="0" 
+                        ValueChanged="Event_SliderValueChange"></Slider>
+                <Label Grid.Column="1" Content="{Binding ElementName=EncounterID, Path=Value}"></Label>
+            </Grid>
+
+            <Grid Margin="0,0,0,5" 
+                  Visibility="{Binding ElementName=ControlRoot, Path=DisplayPortalNumber, Converter={StaticResource booleanToVisibilityConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="25"/>
+                </Grid.ColumnDefinitions>
+
+                <Slider x:Name="PortalID" 
+                        Grid.Column="0" IsSnapToTickEnabled="True" TickPlacement="BottomRight" 
+                        Maximum="31" Minimum="0" Interval="1" Value="0" 
+                        ValueChanged="Event_SliderValueChange"></Slider>
+                <Label Grid.Column="1" Content="{Binding ElementName=PortalID, Path=Value}"></Label>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

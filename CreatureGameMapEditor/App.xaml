@@ -1,0 +1,10 @@
+﻿<Application x:Class="CreatureGameMapEditor.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:CreatureGameMapEditor"
+             StartupUri="Windows/MainWindow.xaml"
+             ShutdownMode="OnMainWindowClose">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
